@@ -1,0 +1,24 @@
+### Open-Meteo: current temperature and wind speed for Fullerton, CA.
+### Returns: JSON with a `current` object containing temperature_2m and wind_speed_10m.
+GET https://api.open-meteo.com/v1/forecast?latitude=33.8704&longitude=-117.9242&current=temperature_2m,wind_speed_10m
+Accept: application/json
+
+###
+
+### Canvas LMS: upcoming assignments/events for the authenticated user.
+### Returns: JSON array of upcoming event objects (assignments, quizzes, etc.)
+### with fields like id, title, html_url, and assignment.due_at.
+GET https://{{$dotenv CANVAS_DOMAIN}}/api/v1/users/self/upcoming_events
+Authorization: Bearer {{$dotenv CANVAS_TOKEN}}
+Accept: application/json
+
+###
+
+### GitHub: recent public activity for a user.
+### Returns: JSON array of event objects (PushEvent, PullRequestEvent, etc.)
+### with fields like id, type, repo.name, payload, and created_at.
+GET https://api.github.com/users/{{$dotenv GITHUB_USERNAME}}/events
+Authorization: Bearer {{$dotenv GITHUB_TOKEN}}
+Accept: application/vnd.github+json
+
+###
