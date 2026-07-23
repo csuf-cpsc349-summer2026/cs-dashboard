@@ -14,6 +14,7 @@ const logger = require("firebase-functions/logger");
 const cors = require("cors")({ origin: true });
 const canvasCourses = require("./fixtures/canvasCourses.json");
 const { scrapeAndStoreParking } = require("./parking/scrapeAndStoreParking");
+const { onSchedule } = require("firebase-functions/v2/scheduler");
 
 initializeApp();
 
@@ -60,4 +61,8 @@ exports.scrapeAndStoreParking = onRequest((req, res) => {
 
     res.json({ lots });
   });
+});
+
+exports.scheduledScrapeParking = onSchedule("every 15 minutes", async () => {
+  await scrapeAndStoreParking();
 });
