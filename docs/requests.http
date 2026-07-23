@@ -14,6 +14,12 @@ Accept: application/json
 
 ###
 
+### MOCK Canvas LMS: mocks canvas JSON data for testing purposes.
+### Returns: JSON array of users (currently 2) that holds course and assignment info for each.
+GET http://127.0.0.1:5001/cpsc349-cs-dashboard/us-central1/getCanvasCourses?userId=jordan
+###
+GET http://127.0.0.1:5001/cpsc349-cs-dashboard/us-central1/getCanvasCourses?userId=alex
+
 ### GitHub: recent public activity for a user.
 ### Returns: JSON array of event objects (PushEvent, PullRequestEvent, etc.)
 ### with fields like id, type, repo.name, payload, and created_at.

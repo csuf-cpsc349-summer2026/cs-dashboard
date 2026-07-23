@@ -7,9 +7,11 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
+const { setGlobalOptions } = require("firebase-functions");
+const { onRequest } = require("firebase-functions/https");
 const logger = require("firebase-functions/logger");
+const cors = require("cors")({ origin: true });
+const canvasCourses = require("./fixtures/canvasCourses.json");
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
@@ -30,3 +32,20 @@ setGlobalOptions({ maxInstances: 10 });
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+exports.health = onRequest((req, res) => {
+  res.json({ status: "ok" });
+});
+
+exports.getCanvasCourses = onRequest((req, res) => {
+  cors(req, res, () => {
+    const userId = req.query.userId;
+    const userData = canvasCourses[userId];
+
+    if (!userData) {
+      return res.status(404).json({ error: "invalid userId" });
+    }
+
+    res.json(userData);
+  });
+});

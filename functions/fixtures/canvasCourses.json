@@ -1,0 +1,96 @@
+{
+  "jordan": {
+    "user_id": 100234,
+    "name": "Jordan",
+    "courses": [
+      {
+        "id": 34521,
+        "name": "Web Development",
+        "course_code": "CPSC-349-01",
+        "assignments": [
+          {
+            "id": 981234,
+            "name": "React Component Lab",
+            "description": "Build a details page using functional components and hooks.",
+            "due_at": "2026-07-28T06:59:00Z",
+            "points_possible": 50,
+            "submission_types": ["online_upload"],
+            "html_url": "https://canvas.example.edu/courses/34521/assignments/981234"
+          },
+          {
+            "id": 981245,
+            "name": "Final Project Milestone 2",
+            "description": "Submit working API integration for at least one data source.",
+            "due_at": "2026-08-04T06:59:00Z",
+            "points_possible": 100,
+            "submission_types": ["online_upload", "online_url"],
+            "html_url": "https://canvas.example.edu/courses/34521/assignments/981245"
+          }
+        ]
+      },
+      {
+        "id": 34588,
+        "name": "Data Structures",
+        "course_code": "CPSC-131-02",
+        "assignments": [
+          {
+            "id": 982001,
+            "name": "Binary Search Tree Implementation",
+            "description": "Implement insert, delete, and traversal methods for a BST.",
+            "due_at": "2026-07-25T06:59:00Z",
+            "points_possible": 40,
+            "submission_types": ["online_upload"],
+            "html_url": "https://canvas.example.edu/courses/34588/assignments/982001"
+          }
+        ]
+      }
+    ]
+  },
+  "alex": {
+    "user_id": 100587,
+    "name": "Alex",
+    "courses": [
+      {
+        "id": 34521,
+        "name": "Web Development",
+        "course_code": "CPSC-349-01",
+        "assignments": [
+          {
+            "id": 981234,
+            "name": "React Component Lab",
+            "description": "Build a details page using functional components and hooks.",
+            "due_at": "2026-07-28T06:59:00Z",
+            "points_possible": 50,
+            "submission_types": ["online_upload"],
+            "html_url": "https://canvas.example.edu/courses/34521/assignments/981234"
+          },
+          {
+            "id": 981245,
+            "name": "Final Project Milestone 2",
+            "description": "Submit working API integration for at least one data source.",
+            "due_at": "2026-08-04T06:59:00Z",
+            "points_possible": 100,
+            "submission_types": ["online_upload", "online_url"],
+            "html_url": "https://canvas.example.edu/courses/34521/assignments/981245"
+          }
+        ]
+      },
+      {
+        "id": 34790,
+        "name": "Database Systems",
+        "course_code": "CPSC-352-01",
+        "assignments": [
+          {
+            "id": 983102,
+            "name": "ER Diagram Submission",
+            "description": "Submit an entity-relationship diagram for the term project schema.",
+            "due_at": "2026-07-30T06:59:00Z",
+            "points_possible": 30,
+            "submission_types": ["online_upload"],
+            "html_url": "https://canvas.example.edu/courses/34790/assignments/983102"
+          }
+        ]
+      }
+    ]
+  }
+}

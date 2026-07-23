@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getWeather, getCanvasTasks, getGitHubActivity } from './lib/api.js'
+import { getWeather, getCanvasCourses, getGitHubActivity } from './lib/api.js'
 
 function ResultBlock({ title, status, data }) {
   return (
@@ -22,7 +22,7 @@ export default function App() {
       .then((data) => setWeather({ status: 'ready', data }))
       .catch(() => setWeather({ status: 'error', data: null }))
 
-    getCanvasTasks()
+    getCanvasCourses()
       .then((data) => setCanvas({ status: 'ready', data }))
       .catch(() => setCanvas({ status: 'error', data: null }))
 

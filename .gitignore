@@ -15,6 +15,7 @@ docs/.env
 
 # Firebase
 functions/node_modules
+functions/**/*.local
 .firebase
 functions/.runtimeconfig.json
 *.firebase-debug.log

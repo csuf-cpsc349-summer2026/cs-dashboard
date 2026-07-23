@@ -25,27 +25,46 @@ export async function getWeather() {
  * Returns mock data shaped like the real Canvas assignments response so the
  * UI can be built against it before the integration goes live.
  */
-export async function getCanvasTasks() {
-  return [
-    {
-      id: 4501287,
-      name: "Homework 4: Binary Search Trees",
-      course_id: 123456,
-      html_url: "https://canvas.example.edu/courses/123456/assignments/4501287",
-      due_at: "2026-07-25T06:59:00Z",
-      points_possible: 100,
-      submission_types: ["online_upload"],
-    },
-    {
-      id: 4501299,
-      name: "Quiz 3: Graph Traversal",
-      course_id: 123456,
-      html_url: "https://canvas.example.edu/courses/123456/assignments/4501299",
-      due_at: "2026-07-22T06:59:00Z",
-      points_possible: 20,
-      submission_types: ["online_quiz"],
-    },
-  ];
+// export async function getCanvasTasks() {
+//   return [
+//     {
+//       id: 4501287,
+//       name: "Homework 4: Binary Search Trees",
+//       course_id: 123456,
+//       html_url: "https://canvas.example.edu/courses/123456/assignments/4501287",
+//       due_at: "2026-07-25T06:59:00Z",
+//       points_possible: 100,
+//       submission_types: ["online_upload"],
+//     },
+//     {
+//       id: 4501299,
+//       name: "Quiz 3: Graph Traversal",
+//       course_id: 123456,
+//       html_url: "https://canvas.example.edu/courses/123456/assignments/4501299",
+//       due_at: "2026-07-22T06:59:00Z",
+//       points_possible: 20,
+//       submission_types: ["online_quiz"],
+//     },
+//   ];
+// }
+
+/**
+ * MOCK Canvas LMS API Implementation
+ */
+const CANVAS_API_BASE =
+  "http://127.0.0.1:5001/cpsc349-cs-dashboard/us-central1";
+
+export async function getCanvasCourses() {
+  const userId = "jordan"; // TODO: replace with real lookup function when user flow exists
+  const res = await fetch(
+    `${CANVAS_API_BASE}/getCanvasCourses?userId=${userId}`,
+  );
+
+  if (!res.ok) {
+    throw new Error("Canvas fetch failed: ${res.status}");
+  }
+
+  return res.json();
 }
 
 /**
