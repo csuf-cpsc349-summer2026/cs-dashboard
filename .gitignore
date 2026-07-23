@@ -12,3 +12,10 @@ frontend/.env.local
 
 # Docs
 docs/.env
+
+# Firebase
+functions/node_modules
+.firebase
+functions/.runtimeconfig.json
+*.firebase-debug.log
+firebase-debug.log
