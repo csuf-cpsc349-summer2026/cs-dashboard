@@ -7,11 +7,15 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
+const { initializeApp } = require("firebase-admin/app");
 const { setGlobalOptions } = require("firebase-functions");
 const { onRequest } = require("firebase-functions/https");
 const logger = require("firebase-functions/logger");
 const cors = require("cors")({ origin: true });
 const canvasCourses = require("./fixtures/canvasCourses.json");
+const { scrapeAndStoreParking } = require("./parking/scrapeAndStoreParking");
+
+initializeApp();
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
@@ -47,5 +51,13 @@ exports.getCanvasCourses = onRequest((req, res) => {
     }
 
     res.json(userData);
+  });
+});
+
+exports.scrapeAndStoreParking = onRequest((req, res) => {
+  cors(req, res, async () => {
+    const lots = await scrapeAndStoreParking();
+
+    res.json({ lots });
   });
 });

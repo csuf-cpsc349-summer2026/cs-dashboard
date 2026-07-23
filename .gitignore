@@ -20,3 +20,4 @@ functions/**/*.local
 functions/.runtimeconfig.json
 *.firebase-debug.log
 firebase-debug.log
+firestore-debug.log
