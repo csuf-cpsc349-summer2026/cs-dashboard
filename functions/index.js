@@ -7,14 +7,15 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
+const { getFirestore } = require("firebase-admin/firestore");
 const { initializeApp } = require("firebase-admin/app");
 const { setGlobalOptions } = require("firebase-functions");
-const { onRequest } = require("firebase-functions/https");
+const { onRequest, onCall, HttpsError } = require("firebase-functions/https");
+const { scrapeAndStoreParking } = require("./parking/scrapeAndStoreParking");
+const { onSchedule } = require("firebase-functions/v2/scheduler");
 const logger = require("firebase-functions/logger");
 const cors = require("cors")({ origin: true });
 const canvasCourses = require("./fixtures/canvasCourses.json");
-const { scrapeAndStoreParking } = require("./parking/scrapeAndStoreParking");
-const { onSchedule } = require("firebase-functions/v2/scheduler");
 
 initializeApp();
 
@@ -55,6 +56,34 @@ exports.getCanvasCourses = onRequest((req, res) => {
   });
 });
 
+exports.getGitHubRepos = onCall(async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Must be signed in.");
+  }
+
+  const uid = request.auth.uid;
+  const db = getFirestore();
+  const userDoc = await db.collection("users").doc(uid).get();
+  const token = userDoc.data()?.githubAccessToken;
+
+  if (!token) {
+    throw new HttpsError("failed-precondition", "No GitHub token on file.");
+  }
+
+  const res = await fetch(
+    "https://api.github.com/user/repos?affiliation=owner&sort=updated",
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+
+  if (!res.ok) {
+    throw new HttpsError("internal", `GitHub fetch failed: ${res.status}`);
+  }
+
+  return res.json();
+});
+
 exports.scrapeAndStoreParking = onRequest((req, res) => {
   cors(req, res, async () => {
     const lots = await scrapeAndStoreParking();
@@ -63,6 +92,12 @@ exports.scrapeAndStoreParking = onRequest((req, res) => {
   });
 });
 
-exports.scheduledScrapeParking = onSchedule("every 15 minutes", async () => {
-  await scrapeAndStoreParking();
-});
+exports.scheduledScrapeParking = onSchedule(
+  {
+    schedule: "0,15,30,45 6-22 * * *",
+    timeZone: "America/Los_Angeles",
+  },
+  async () => {
+    await scrapeAndStoreParking();
+  },
+);

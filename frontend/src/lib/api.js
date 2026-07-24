@@ -1,6 +1,13 @@
 import { signInWithPopup, GithubAuthProvider } from "firebase/auth";
-import { auth, githubProvider, db, getCurrentUser } from "./firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
+import {
+  auth,
+  githubProvider,
+  db,
+  getCurrentUser,
+  functions,
+} from "./firebase";
 
 /**
  * Live: fetches current temperature and wind speed from Open-Meteo.
@@ -22,8 +29,9 @@ export async function getWeather() {
 /**
  * Live: MOCK Canvas LMS API Implementation
  */
-const CANVAS_API_BASE =
-  "http://127.0.0.1:5001/cpsc349-cs-dashboard/us-central1";
+const CANVAS_API_BASE = import.meta.env.DEV
+  ? "http://127.0.0.1:5001/cpsc349-cs-dashboard/us-central1"
+  : "https://us-central1-cpsc349-cs-dashboard.cloudfunctions.net";
 
 export async function getCanvasCourses() {
   const userId = "jordan"; // TODO: replace with real lookup function when user flow exists
@@ -64,26 +72,11 @@ export async function signInWithGitHub() {
 
 /**
  * TESTING: GitHub Repo Fetch
- * TODO: move token usage server-side via callable function
  */
 
 export async function getGitHubRepos() {
-  const user = await getCurrentUser();
+  const callable = httpsCallable(functions, "getGitHubRepos");
+  const result = await callable();
 
-  if (!user) {
-    throw new Error("Not signed in...");
-  }
-
-  const userDoc = await getDoc(doc(db, "users", user.uid));
-  const token = userDoc.data()?.githubAccessToken;
-
-  const res = await fetch("https://api.github.com/user/repos", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!res.ok) {
-    throw new Error(`GitHub fetch failed: ${res.status}`);
-  }
-
-  return res.json();
+  return result.data;
 }
