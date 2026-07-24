@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getWeather, getCanvasCourses, getGitHubActivity } from './lib/api.js'
+import { getWeather, getCanvasCourses, signInWithGitHub, getGitHubRepos } from './lib/api.js'
 
 function ResultBlock({ title, status, data }) {
   return (
@@ -15,7 +15,6 @@ function ResultBlock({ title, status, data }) {
 export default function App() {
   const [weather, setWeather] = useState({ status: 'loading', data: null })
   const [canvas, setCanvas] = useState({ status: 'loading', data: null })
-  const [github, setGithub] = useState({ status: 'loading', data: null })
 
   useEffect(() => {
     getWeather()
@@ -25,10 +24,6 @@ export default function App() {
     getCanvasCourses()
       .then((data) => setCanvas({ status: 'ready', data }))
       .catch(() => setCanvas({ status: 'error', data: null }))
-
-    getGitHubActivity()
-      .then((data) => setGithub({ status: 'ready', data }))
-      .catch(() => setGithub({ status: 'error', data: null }))
   }, [])
 
   return (
@@ -36,9 +31,17 @@ export default function App() {
       <h1>CS Productivity Dashboard</h1>
       <p>Integration checkpoint: one live source, two mocked sources.</p>
 
+      {/* TEMPORARY TESTING BUTTONS */}
+      <button onClick={() => signInWithGitHub().then(console.log).catch(console.error)}>
+        Test GitHub Sign In
+      </button>
+
+      <button onClick={() => getGitHubRepos().then(console.log).catch(console.error)}>
+        Test GitHub Repo Fetch
+      </button>
+
       <ResultBlock title="Open-Meteo (live)" status={weather.status} data={weather.data} />
       <ResultBlock title="Canvas LMS (mocked)" status={canvas.status} data={canvas.data} />
-      <ResultBlock title="GitHub Activity (mocked)" status={github.status} data={github.data} />
     </main>
   )
 }
