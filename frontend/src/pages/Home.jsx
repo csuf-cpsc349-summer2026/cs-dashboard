@@ -1,46 +1,39 @@
-import { useEffect, useState } from 'react'
-import { getWeather, getCanvasCourses, signInWithGitHub, getGitHubRepos } from '../lib/api.js'
+import Card from '../components/Card.jsx'
 
-function ResultBlock({ title, status, data }) {
+export default function Home() {
   return (
-    <section>
-      <h2>{title}</h2>
-      {status === 'loading' && <p>Loading...</p>}
-      {status === 'error' && <p>Failed to load.</p>}
-      {status === 'ready' && <pre>{JSON.stringify(data, null, 2)}</pre>}
-    </section>
+    <>
+      <DesktopGrid />
+      <MobileStack />
+    </>
   )
 }
 
-export default function Home() {
-  const [weather, setWeather] = useState({ status: 'loading', data: null })
-  const [canvas, setCanvas] = useState({ status: 'loading', data: null })
-
-  useEffect(() => {
-    getWeather()
-      .then((data) => setWeather({ status: 'ready', data }))
-      .catch(() => setWeather({ status: 'error', data: null }))
-
-    getCanvasCourses()
-      .then((data) => setCanvas({ status: 'ready', data }))
-      .catch(() => setCanvas({ status: 'error', data: null }))
-  }, [])
-
+/** Desktop layout: shown at md+ */
+function DesktopGrid() {
   return (
-    <main>
-      <h1>CS Productivity Dashboard</h1>
-      <p>Integration checkpoint: one live source, two mocked sources.</p>
+    <div
+      className="hidden md:grid h-full gap-6"
+      style={{
+        gridTemplateColumns: '1fr 1fr 2fr',
+        gridTemplateRows: '1fr 1fr',
+      }}
+    >
+      <Card label="Weather" style={{ gridColumn: '1', gridRow: '1' }} />
+      <Card label="Parking" style={{ gridColumn: '2', gridRow: '1' }} />
+      <Card label="GitHub Repo" style={{ gridColumn: '1 / 3', gridRow: '2' }} />
+      <Card label="Canvas" style={{ gridColumn: '3', gridRow: '1 / 3' }} />
+    </div>
+  )
+}
 
-      <button onClick={() => signInWithGitHub().then(console.log).catch(console.error)}>
-        Test GitHub Sign In
-      </button>
-
-      <button onClick={() => getGitHubRepos().then(console.log).catch(console.error)}>
-        Test GitHub Repo Fetch
-      </button>
-
-      <ResultBlock title="Open-Meteo (live)" status={weather.status} data={weather.data} />
-      <ResultBlock title="Canvas LMS (mocked)" status={canvas.status} data={canvas.data} />
-    </main>
+/** Mobile layout: single column, shown below md */
+function MobileStack() {
+  return (
+    <div className="flex md:hidden flex-col gap-5 h-full">
+      {['Weather', 'Parking', 'GitHub Repo', 'Canvas'].map(label => (
+        <Card key={label} label={label} style={{ flex: '1 1 0', minHeight: 160 }} />
+      ))}
+    </div>
   )
 }

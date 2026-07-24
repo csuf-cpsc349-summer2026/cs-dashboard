@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './routes/ProtectedRoute.jsx'
+import Layout from './layouts/Layout.jsx'
 import Login from './pages/Login.jsx'
 import Onboarding from './pages/Onboarding.jsx'
 import Home from './pages/Home.jsx'
@@ -14,45 +15,18 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/onboarding" element={<Onboarding />} />
       <Route
-        path="/"
         element={
           <ProtectedRoute>
-            <Home />
+            <Layout />
           </ProtectedRoute>
         }
-      />
-      <Route
-        path="/study"
-        element={
-          <ProtectedRoute>
-            <Study />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/coder"
-        element={
-          <ProtectedRoute>
-            <Coder />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/settings"
-        element={
-          <ProtectedRoute>
-            <Settings />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/about"
-        element={
-          <ProtectedRoute>
-            <About />
-          </ProtectedRoute>
-        }
-      />
+      >
+        <Route path="/" element={<Home />} />
+        <Route path="/study" element={<Study />} />
+        <Route path="/coder" element={<Coder />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/about" element={<About />} />
+      </Route>
     </Routes>
   )
 }
