@@ -64,6 +64,7 @@ export async function signInWithGitHub() {
 
 /**
  * TESTING: GitHub Repo Fetch
+ * TODO: move token usage server-side via callable function
  */
 
 export async function getGitHubRepos() {

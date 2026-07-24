@@ -1,47 +1,58 @@
-import { useEffect, useState } from 'react'
-import { getWeather, getCanvasCourses, signInWithGitHub, getGitHubRepos } from './lib/api.js'
-
-function ResultBlock({ title, status, data }) {
-  return (
-    <section>
-      <h2>{title}</h2>
-      {status === 'loading' && <p>Loading...</p>}
-      {status === 'error' && <p>Failed to load.</p>}
-      {status === 'ready' && <pre>{JSON.stringify(data, null, 2)}</pre>}
-    </section>
-  )
-}
+import { Routes, Route } from 'react-router-dom'
+import ProtectedRoute from './routes/ProtectedRoute.jsx'
+import Login from './pages/Login.jsx'
+import Onboarding from './pages/Onboarding.jsx'
+import Home from './pages/Home.jsx'
+import Study from './pages/Study.jsx'
+import Coder from './pages/Coder.jsx'
+import Settings from './pages/Settings.jsx'
+import About from './pages/About.jsx'
 
 export default function App() {
-  const [weather, setWeather] = useState({ status: 'loading', data: null })
-  const [canvas, setCanvas] = useState({ status: 'loading', data: null })
-
-  useEffect(() => {
-    getWeather()
-      .then((data) => setWeather({ status: 'ready', data }))
-      .catch(() => setWeather({ status: 'error', data: null }))
-
-    getCanvasCourses()
-      .then((data) => setCanvas({ status: 'ready', data }))
-      .catch(() => setCanvas({ status: 'error', data: null }))
-  }, [])
-
   return (
-    <main>
-      <h1>CS Productivity Dashboard</h1>
-      <p>Integration checkpoint: one live source, two mocked sources.</p>
-
-      {/* TEMPORARY TESTING BUTTONS */}
-      <button onClick={() => signInWithGitHub().then(console.log).catch(console.error)}>
-        Test GitHub Sign In
-      </button>
-
-      <button onClick={() => getGitHubRepos().then(console.log).catch(console.error)}>
-        Test GitHub Repo Fetch
-      </button>
-
-      <ResultBlock title="Open-Meteo (live)" status={weather.status} data={weather.data} />
-      <ResultBlock title="Canvas LMS (mocked)" status={canvas.status} data={canvas.data} />
-    </main>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/onboarding" element={<Onboarding />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/study"
+        element={
+          <ProtectedRoute>
+            <Study />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/coder"
+        element={
+          <ProtectedRoute>
+            <Coder />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   )
 }
