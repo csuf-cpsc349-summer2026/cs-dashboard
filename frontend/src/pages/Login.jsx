@@ -1,16 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { signInWithGitHub } from '../lib/api.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import LoadingScreen from '../components/LoadingScreen.jsx'
 
 export default function Login() {
+  const { user, loading, profile, profileLoading } = useAuth()
   const navigate = useNavigate()
   const [signingIn, setSigningIn] = useState(false)
+
+  useEffect(() => {
+    if (!user || profileLoading) return
+
+    navigate(profile?.onboardingComplete ? '/' : '/onboarding', { replace: true })
+  }, [user, profileLoading, profile, navigate])
+
+  if (loading || user) {
+    return <LoadingScreen />
+  }
 
   async function handleSignIn() {
     setSigningIn(true)
     try {
       await signInWithGitHub()
-      navigate('/')
     } catch (error) {
       console.error(error)
     } finally {

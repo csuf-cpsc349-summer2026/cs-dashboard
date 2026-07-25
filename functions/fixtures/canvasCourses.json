@@ -92,5 +92,36 @@
         ]
       }
     ]
+  },
+  "test": {
+    "user_id": 100999,
+    "name": "Test",
+    "courses": [
+      {
+        "id": 39999,
+        "name": "Test Course 101",
+        "course_code": "TEST-101-00",
+        "assignments": [
+          {
+            "id": 989001,
+            "name": "Sample Assignment 1",
+            "description": "Placeholder assignment used for demoing the dashboard.",
+            "due_at": "2026-07-29T06:59:00Z",
+            "points_possible": 50,
+            "submission_types": ["online_upload"],
+            "html_url": "https://canvas.example.edu/courses/39999/assignments/989001"
+          },
+          {
+            "id": 989002,
+            "name": "Sample Assignment 2",
+            "description": "Second placeholder assignment used for demoing the dashboard.",
+            "due_at": "2026-08-05T06:59:00Z",
+            "points_possible": 25,
+            "submission_types": ["online_upload"],
+            "html_url": "https://canvas.example.edu/courses/39999/assignments/989002"
+          }
+        ]
+      }
+    ]
   }
 }

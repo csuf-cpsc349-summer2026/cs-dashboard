@@ -13,7 +13,14 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/onboarding" element={<Onboarding />} />
+      <Route
+        path="/onboarding"
+        element={
+          <ProtectedRoute requireOnboarding={false}>
+            <Onboarding />
+          </ProtectedRoute>
+        }
+      />
       <Route
         element={
           <ProtectedRoute>
