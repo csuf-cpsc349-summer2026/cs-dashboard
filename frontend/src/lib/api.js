@@ -33,8 +33,7 @@ const CANVAS_API_BASE = import.meta.env.DEV
   ? "http://127.0.0.1:5001/cpsc349-cs-dashboard/us-central1"
   : "https://us-central1-cpsc349-cs-dashboard.cloudfunctions.net";
 
-export async function getCanvasCourses() {
-  const userId = "jordan"; // TODO: replace with real lookup function when user flow exists
+export async function getCanvasCourses(userId = "jordan") {
   const res = await fetch(
     `${CANVAS_API_BASE}/getCanvasCourses?userId=${userId}`,
   );
@@ -44,6 +43,23 @@ export async function getCanvasCourses() {
   }
 
   return res.json();
+}
+
+/**
+ * Flattens Canvas courses into a task-shaped list for the Study page's
+ * Kanban board: { id, title, dueAt, source }.
+ */
+export async function getCanvasTasks(userId = "jordan") {
+  const data = await getCanvasCourses(userId);
+
+  return data.courses.flatMap((course) =>
+    course.assignments.map((assignment) => ({
+      id: `canvas-${assignment.id}`,
+      title: `${assignment.name} (${course.course_code})`,
+      dueAt: assignment.due_at,
+      source: "canvas",
+    })),
+  );
 }
 
 /**
