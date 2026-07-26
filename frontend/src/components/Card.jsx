@@ -1,4 +1,4 @@
-export default function Card({ label, headerRight, className = '', style, children }) {
+export default function Card({ label, headerRight, className = '', style, children, scrollable = true }) {
   return (
     <div
       className={`bg-white border border-gray-200 rounded-xl p-5 flex flex-col min-h-0 ${className}`}
@@ -10,7 +10,10 @@ export default function Card({ label, headerRight, className = '', style, childr
         </span>
         {headerRight}
       </div>
-      <div className="flex-1 min-h-0 overflow-y-auto flex flex-col">
+      <div
+        className={`flex-1 min-h-0 flex flex-col ${scrollable ? 'overflow-y-auto' : 'overflow-hidden'}`}
+        style={{ containerType: scrollable ? 'inline-size' : 'size' }}
+      >
         {children}
       </div>
     </div>

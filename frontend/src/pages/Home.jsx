@@ -62,10 +62,16 @@ function GitHubRepoCard({ style }) {
                 rel="noopener noreferrer"
                 className="group block rounded-lg no-underline bg-[#FAFAFA] border border-[#EFEFEF] py-3 px-3.5 transition-colors duration-150 hover:bg-[var(--accent-color)] hover:border-[var(--accent-color)]"
               >
-                <p className="text-sm font-semibold text-gray-900 transition-colors duration-150 group-hover:text-white">
+                <p
+                  className="font-semibold text-gray-900 transition-colors duration-150 group-hover:text-white"
+                  style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)' }}
+                >
                   {repo.name}
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5 transition-colors duration-150 group-hover:text-white/85">
+                <p
+                  className="text-gray-400 mt-0.5 transition-colors duration-150 group-hover:text-white/85"
+                  style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)' }}
+                >
                   {repo.language ? `${repo.language} · ` : ''}updated {timeAgo(repo.updated_at)}
                 </p>
               </a>
@@ -82,27 +88,39 @@ function WeatherCard({ style }) {
   const city = profile?.city
   const { data, loading, error } = useCachedFetch('weather-' + city, () => getWeather(city))
 
+  // NOTE: clamp() bounds below are starting values — tune after visual review.
+  const iconSize = 'clamp(32px, min(16cqw, 16cqh), 96px)'
+
   return (
-    <Card label="Weather" style={style}>
+    <Card label="Weather" style={style} scrollable={false}>
       {loading && <p className="text-sm text-gray-400 mt-3">Loading...</p>}
       {error && <p className="text-sm text-gray-400 mt-3">Couldn't load weather right now.</p>}
       {!loading && !error && data && (
-        <div className="h-full flex flex-col items-center justify-center gap-3">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">{data.location}</p>
+        <div className="h-full flex flex-col items-center justify-center" style={{ gap: 'clamp(0.5rem, 3cqh, 1rem)' }}>
+          <p className="text-xl font-semibold text-gray-400 uppercase tracking-wide">{data.location}</p>
 
-          <div className="flex items-center gap-3">
-            <WeatherIcon code={data.weatherCode} className="w-9 h-9" />
-            <span className="text-4xl font-bold text-gray-900">{Math.round(data.temperature)}°</span>
+          <div className="flex items-center" style={{ gap: 'clamp(0.5rem, 4cqw, 1rem)' }}>
+            <WeatherIcon code={data.weatherCode} style={{ width: iconSize, height: iconSize }} />
+            <span className="font-bold text-gray-900" style={{ fontSize: 'clamp(2rem, 14cqh, 5rem)' }}>
+              {Math.round(data.temperature)}°
+            </span>
           </div>
 
-          <div className="flex items-center gap-6 pt-3 border-t border-gray-100">
+          <div
+            className="flex items-center border-t border-gray-100"
+            style={{ gap: 'clamp(1rem, 6cqw, 1.5rem)', paddingTop: 'clamp(0.5rem, 2cqh, 0.75rem)' }}
+          >
             <div className="text-center">
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">High</p>
-              <p className="text-sm font-medium text-gray-700">{Math.round(data.high)}°</p>
+              <p className="font-medium text-gray-700" style={{ fontSize: 'clamp(0.875rem, 4cqh, 1.25rem)' }}>
+                {Math.round(data.high)}°
+              </p>
             </div>
             <div className="text-center">
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">Low</p>
-              <p className="text-sm font-medium text-gray-700">{Math.round(data.low)}°</p>
+              <p className="font-medium text-gray-700" style={{ fontSize: 'clamp(0.875rem, 4cqh, 1.25rem)' }}>
+                {Math.round(data.low)}°
+              </p>
             </div>
           </div>
         </div>
@@ -111,11 +129,11 @@ function WeatherCard({ style }) {
   )
 }
 
-function WeatherIcon({ code, className }) {
+function WeatherIcon({ code, style }) {
   const bucket = weatherIconBucket(code)
-  if (bucket === 'sunny') return <SunIcon className={className} />
-  if (bucket === 'rain') return <RainIcon className={className} />
-  return <CloudIcon className={className} />
+  if (bucket === 'sunny') return <SunIcon style={style} />
+  if (bucket === 'rain') return <RainIcon style={style} />
+  return <CloudIcon style={style} />
 }
 
 /** WMO weather codes bucketed into the three icons this design supports; unmapped codes fall back to cloudy. */
@@ -126,9 +144,9 @@ function weatherIconBucket(code) {
   return 'cloudy'
 }
 
-function SunIcon({ className }) {
+function SunIcon({ style }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} aria-hidden="true">
       <circle cx="12" cy="12" r="5" />
       <line x1="12" y1="1" x2="12" y2="3" />
       <line x1="12" y1="21" x2="12" y2="23" />
@@ -142,17 +160,17 @@ function SunIcon({ className }) {
   )
 }
 
-function CloudIcon({ className }) {
+function CloudIcon({ style }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} aria-hidden="true">
       <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
     </svg>
   )
 }
 
-function RainIcon({ className }) {
+function RainIcon({ style }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} aria-hidden="true">
       <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
       <path d="M8 13v8" />
       <path d="M12 15v8" />
@@ -175,14 +193,17 @@ function ParkingCard({ style }) {
   const lots = data?.lots ?? []
 
   return (
-    <Card label="Parking" style={style}>
+    <Card label="Parking" style={style} scrollable={false}>
       {loading && <p className="text-sm text-gray-400 mt-3">Loading...</p>}
       {error && <p className="text-sm text-gray-400 mt-3">Couldn't load parking data right now.</p>}
       {!loading && !error && lots.length === 0 && (
         <p className="text-sm text-gray-400 mt-3">Parking data unavailable.</p>
       )}
       {!loading && !error && lots.length > 0 && (
-        <div className="h-full grid grid-cols-2 gap-x-6 gap-y-4 content-evenly justify-items-center mt-3">
+        <div
+          className="h-full grid grid-cols-2 content-evenly justify-items-center mt-3"
+          style={{ columnGap: 'clamp(1rem, 6cqw, 1.5rem)', rowGap: 'clamp(0.5rem, 3cqh, 1rem)' }}
+        >
           {lots.map(lot => (
             <ParkingRing key={lot.name} lot={lot} />
           ))}
@@ -206,21 +227,26 @@ function ParkingRing({ lot }) {
   const labelColor = closed ? '#D1D5DB' : '#111827'
   const detailColor = closed ? '#D1D5DB' : '#374151'
 
+  // NOTE: clamp() bounds below are starting values — tune after visual review.
+  // Inner circle inset uses a percentage (not px) so it scales proportionally with the ring.
+  const ringSize = 'clamp(48px, min(20cqw, 26cqh), 110px)'
+  const textStyle = { fontSize: 'clamp(9px, 3cqh, 13px)' }
+
   return (
     <div
       className="group relative rounded-full flex-shrink-0"
-      style={{ width: 72, height: 72, background: ringBackground }}
+      style={{ width: ringSize, height: ringSize, background: ringBackground }}
     >
-      <div className="absolute rounded-full bg-white" style={{ inset: 8 }}>
+      <div className="absolute rounded-full bg-white" style={{ inset: '11%' }}>
         <span
-          className="absolute inset-0 flex items-center justify-center text-center text-xs font-medium leading-tight px-2 transition-opacity duration-150 opacity-100 group-hover:opacity-0"
-          style={{ color: labelColor }}
+          className="absolute inset-0 flex items-center justify-center text-center font-medium leading-tight px-2 transition-opacity duration-150 opacity-100 group-hover:opacity-0"
+          style={{ color: labelColor, ...textStyle }}
         >
           {displayName}
         </span>
         <span
-          className="absolute inset-0 flex items-center justify-center text-center text-xs font-medium leading-tight px-2 transition-opacity duration-150 opacity-0 group-hover:opacity-100"
-          style={{ color: detailColor }}
+          className="absolute inset-0 flex items-center justify-center text-center font-medium leading-tight px-2 transition-opacity duration-150 opacity-0 group-hover:opacity-100"
+          style={{ color: detailColor, ...textStyle }}
         >
           {closed ? 'Closed' : `${percentValue}%`}
         </span>
@@ -293,10 +319,16 @@ function CanvasCard({ style }) {
 function AssignmentRow({ assignment }) {
   return (
     <div className="group block rounded-lg bg-[#FAFAFA] border border-[#EFEFEF] py-3 px-3.5 transition-colors duration-150 hover:bg-[var(--accent-color)] hover:border-[var(--accent-color)]">
-      <p className="text-sm font-semibold text-gray-900 transition-colors duration-150 group-hover:text-white">
+      <p
+        className="font-semibold text-gray-900 transition-colors duration-150 group-hover:text-white"
+        style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)' }}
+      >
         {assignment.name}
       </p>
-      <p className="text-xs text-gray-400 mt-0.5 transition-colors duration-150 group-hover:text-white/85">
+      <p
+        className="text-gray-400 mt-0.5 transition-colors duration-150 group-hover:text-white/85"
+        style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)' }}
+      >
         {assignment.courseName} · due {formatDueDate(assignment.due_at)}
       </p>
     </div>

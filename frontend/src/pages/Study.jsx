@@ -82,12 +82,12 @@ export default function Study() {
 /** Desktop layout: shown at md+. Kanban gets top row; Pomodoro (narrow) and Music (wide) share the bottom row. */
 function DesktopLayout({ tasks, onMove, kanbanHeader }) {
   return (
-    <div className="hidden md:grid h-full gap-6" style={{ gridTemplateRows: '3fr 2fr' }}>
+    <div className="hidden md:grid h-full gap-6" style={{ gridTemplateRows: '2fr 1fr' }}>
       <Card label="Scrum / Kanban" headerRight={kanbanHeader} className="flex flex-col">
         <KanbanBoard tasks={tasks} onMove={onMove} />
       </Card>
 
-      <div className="grid grid-cols-2 gap-6 min-h-0 max-w-3xl w-full mx-auto">
+      <div className="grid grid-cols-2 gap-6 min-h-0">
         <Card label="Pomodoro" className="flex flex-col">
           <PomodoroTimer />
         </Card>

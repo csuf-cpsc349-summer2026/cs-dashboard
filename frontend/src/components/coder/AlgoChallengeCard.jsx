@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useCachedFetch } from '../../hooks/useCachedFetch.js'
 import { getDailyAlgoChallenge } from '../../lib/api.js'
 
 const DIFFICULTY_COLORS = {
@@ -8,28 +8,20 @@ const DIFFICULTY_COLORS = {
 }
 
 export default function AlgoChallengeCard() {
-  const [challenge, setChallenge] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    getDailyAlgoChallenge()
-      .then(setChallenge)
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false))
-  }, [])
+  const { data: challenge, loading, error } = useCachedFetch('daily-algo', getDailyAlgoChallenge)
 
   if (loading) {
     return <p className="text-xs text-gray-400 mt-2">Loading...</p>
   }
 
-  if (!challenge) {
+  if (error || !challenge) {
     return <p className="text-xs text-gray-400 mt-2">Couldn't load today's challenge.</p>
   }
 
   const colors = DIFFICULTY_COLORS[challenge.difficulty] ?? DIFFICULTY_COLORS.Medium
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col mt-2 overflow-y-auto">
+    <div className="flex-1 min-h-0 flex flex-col mt-2">
       <div className="flex items-center gap-2 mb-2">
         <span
           className="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full flex-shrink-0"
@@ -42,16 +34,23 @@ export default function AlgoChallengeCard() {
         )}
       </div>
 
+      {/* NOTE: clamp() bounds below are starting values — tune after visual review */}
       <a
         href={challenge.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm font-medium text-gray-800 hover:text-gray-900 leading-snug"
+        className="font-medium text-gray-800 hover:text-gray-900 leading-snug"
+        style={{ fontSize: 'clamp(1.125rem, 5cqh, 1.75rem)' }}
       >
         {challenge.title}
       </a>
 
-      <p className="text-xs text-gray-500 mt-2 leading-relaxed">{challenge.description}</p>
+      <p
+        className="text-gray-500 mt-2"
+        style={{ fontSize: 'clamp(0.8rem, 3cqh, 1rem)', lineHeight: 1.6 }}
+      >
+        {challenge.description}
+      </p>
     </div>
   )
 }

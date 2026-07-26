@@ -37,7 +37,7 @@ function DesktopLayout() {
           <JobPostingComingSoon />
         </Card>
       </div>
-      <Card label="Daily Algo Challenge" className="flex flex-col">
+      <Card label="Daily Algo Challenge" className="flex flex-col" scrollable={false}>
         <AlgoChallengeCard />
       </Card>
     </div>
@@ -54,7 +54,7 @@ function MobileLayout() {
       <Card label="Job Posting" style={{ flex: '1 1 0', minHeight: 160 }}>
         <JobPostingComingSoon />
       </Card>
-      <Card label="Daily Algo Challenge" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 160 }}>
+      <Card label="Daily Algo Challenge" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 160 }} scrollable={false}>
         <AlgoChallengeCard />
       </Card>
     </div>
