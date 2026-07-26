@@ -16,6 +16,7 @@ const { onSchedule } = require("firebase-functions/v2/scheduler");
 const logger = require("firebase-functions/logger");
 const cors = require("cors")({ origin: true });
 const canvasCourses = require("./fixtures/canvasCourses.json");
+const algoChallenges = require("./fixtures/algoChallenges.json");
 
 initializeApp();
 
@@ -82,6 +83,16 @@ exports.getGitHubRepos = onCall(async (request) => {
   }
 
   return res.json();
+});
+
+exports.getDailyAlgoChallenge = onRequest((req, res) => {
+  cors(req, res, () => {
+    const startOfYear = new Date(Date.UTC(new Date().getUTCFullYear(), 0, 0));
+    const dayOfYear = Math.floor((Date.now() - startOfYear) / 86400000);
+    const challenge = algoChallenges[dayOfYear % algoChallenges.length];
+
+    res.json({ ...challenge, date: new Date().toISOString().slice(0, 10) });
+  });
 });
 
 exports.scrapeAndStoreParking = onRequest((req, res) => {
