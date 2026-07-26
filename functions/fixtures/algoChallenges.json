@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "description": "Given an array of integers and a target, return the indices of the two numbers that add up to the target.",
+    "url": "https://leetcode.com/problems/two-sum/"
+  },
+  {
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "description": "Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+    "url": "https://leetcode.com/problems/valid-parentheses/"
+  },
+  {
+    "title": "Merge Intervals",
+    "difficulty": "Medium",
+    "description": "Given an array of intervals, merge all overlapping intervals and return an array of the non-overlapping intervals.",
+    "url": "https://leetcode.com/problems/merge-intervals/"
+  },
+  {
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "Medium",
+    "description": "Given a string, find the length of the longest substring without repeating characters.",
+    "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
+  },
+  {
+    "title": "Binary Tree Level Order Traversal",
+    "difficulty": "Medium",
+    "description": "Given the root of a binary tree, return the level order traversal of its nodes' values.",
+    "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
+  },
+  {
+    "title": "Word Ladder",
+    "difficulty": "Hard",
+    "description": "Given two words and a dictionary, find the length of the shortest transformation sequence from the first word to the second.",
+    "url": "https://leetcode.com/problems/word-ladder/"
+  },
+  {
+    "title": "Trapping Rain Water",
+    "difficulty": "Hard",
+    "description": "Given n non-negative integers representing an elevation map, compute how much water it can trap after raining.",
+    "url": "https://leetcode.com/problems/trapping-rain-water/"
+  }
+]
