@@ -71,7 +71,7 @@ exports.getGitHubRepos = onCall(async (request) => {
   }
 
   const res = await fetch(
-    "https://api.github.com/user/repos?affiliation=owner&sort=updated",
+    "https://api.github.com/user/repos?affiliation=owner&sort=updated&direction=desc&per_page=5",
     {
       headers: { Authorization: `Bearer ${token}` },
     },
