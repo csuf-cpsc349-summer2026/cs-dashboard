@@ -4,14 +4,16 @@ import AlgoChallengeCard from '../components/coder/AlgoChallengeCard.jsx'
 
 function JobPostingComingSoon() {
   return (
-    <div className="flex items-center gap-2 mt-2">
+    <div className="flex-1 min-h-0 flex flex-col items-center justify-center text-center gap-3">
       <span
-        className="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full flex-shrink-0"
-        style={{ backgroundColor: '#FBE7DF', color: '#D85A30' }}
+        className="inline-block text-sm font-semibold px-4 py-1.5 rounded-full"
+        style={{ backgroundColor: '#D85A30', color: 'white' }}
       >
         Coming soon
       </span>
-      <span className="text-[11px] text-gray-400">Job postings integration</span>
+      <p className="text-sm text-gray-500 max-w-xs">
+        Job postings integration is on the way — we're working on surfacing openings relevant to CS students right here.
+      </p>
     </div>
   )
 }
@@ -33,11 +35,11 @@ function DesktopLayout() {
         <Card label="News" className="flex flex-col">
           <NewsCard />
         </Card>
-        <Card label="Job Posting">
+        <Card label="Job Posting" className="flex flex-col">
           <JobPostingComingSoon />
         </Card>
       </div>
-      <Card label="Daily Algo Challenge" className="flex flex-col" scrollable={false}>
+      <Card label="Daily Algo Challenge" className="flex flex-col" >
         <AlgoChallengeCard />
       </Card>
     </div>
@@ -51,10 +53,10 @@ function MobileLayout() {
       <Card label="News" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 160 }}>
         <NewsCard />
       </Card>
-      <Card label="Job Posting" style={{ flex: '1 1 0', minHeight: 160 }}>
+      <Card label="Job Posting" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 160 }}>
         <JobPostingComingSoon />
       </Card>
-      <Card label="Daily Algo Challenge" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 160 }} scrollable={false}>
+      <Card label="Daily Algo Challenge" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 160 }} >
         <AlgoChallengeCard />
       </Card>
     </div>
