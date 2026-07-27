@@ -7,7 +7,7 @@ const COLUMNS = [
   { key: 'done', label: 'Done' },
 ]
 
-export default function KanbanBoard({ tasks, onMove }) {
+export default function KanbanBoard({ tasks, onMove, onDelete }) {
   return (
     <div className="flex-1 min-h-0 flex gap-4 mt-4 overflow-x-auto">
       {COLUMNS.map(({ key, label }) => (
@@ -19,7 +19,7 @@ export default function KanbanBoard({ tasks, onMove }) {
             {tasks
               .filter((task) => task.status === key)
               .map((task) => (
-                <TaskCard key={task.id} task={task} onMove={onMove} />
+                <TaskCard key={task.id} task={task} onMove={onMove} onDelete={onDelete} />
               ))}
           </div>
         </div>
