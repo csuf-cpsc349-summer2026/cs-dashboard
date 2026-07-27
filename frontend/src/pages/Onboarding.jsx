@@ -56,7 +56,7 @@ export default function Onboarding() {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
-      style={{ backgroundColor: '#F7F8FA' }}
+      style={{ backgroundColor: 'var(--bg-page)' }}
     >
       <div
         className="w-full max-w-md bg-white rounded-xl border border-gray-200 shadow-sm"
@@ -109,7 +109,7 @@ function ProgressDots({ step }) {
 function StepWelcome() {
   return (
     <div className="text-center">
-      <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-3">
+      <h1 className="text-3xl font-bold tracking-tight mb-3" style={{ color: 'var(--text-primary)' }}>
         {'{'}
         <span style={{ color: 'var(--accent-color)' }}>Welcome</span>
         {'}'}
@@ -127,7 +127,7 @@ function StepWelcome() {
 function StepLocation({ city, setCity }) {
   return (
     <div className="text-center">
-      <h2 className="text-xl font-semibold text-gray-900 mb-2">Where's your campus?</h2>
+      <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Where's your campus?</h2>
       <p className="text-sm text-gray-500 mb-4">
         Whether you're living in a dorm or commuting in, we'll show campus weather so you know how to prepare.
       </p>
@@ -144,7 +144,7 @@ function StepLocation({ city, setCity }) {
 function StepCanvas({ canvasField, setCanvasField }) {
   return (
     <div className="text-center">
-      <h2 className="text-xl font-semibold text-gray-900 mb-2">Connect Canvas</h2>
+      <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Connect Canvas</h2>
       <p className="text-sm text-gray-500 mb-4">
         Generate a token from Canvas under Account &rarr; Settings &rarr; New Access Token, then paste it below.
       </p>
@@ -173,7 +173,7 @@ function StepMusic() {
       >
         <i className="ti ti-brand-spotify" style={{ fontSize: '50px', color: '#0F6E56' }} aria-hidden="true"></i>
       </div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-2">Music, coming soon</h2>
+      <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Music, coming soon</h2>
       <p className="text-sm text-gray-500 mb-4">
         Spotify integration is on the way. For now, you'll get a lofi stream to vibe with on the Study page.
       </p>

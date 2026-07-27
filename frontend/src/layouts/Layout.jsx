@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { signOut } from 'firebase/auth'
+import { auth } from '../lib/firebase.js'
 
 const NAV_H = 56 // h-14
 
@@ -20,8 +22,14 @@ export default function Layout() {
     navigate(to)
   }
 
+  async function handleLogout() {
+    setMenuOpen(false)
+    await signOut(auth)
+    navigate('/login')
+  }
+
   return (
-    <div className="flex flex-col" style={{ height: '100dvh', backgroundColor: '#F7F8FA', fontFamily: 'Inter, sans-serif' }}>
+    <div className="flex flex-col" style={{ height: '100dvh', backgroundColor: 'var(--bg-page)', fontFamily: 'Inter, sans-serif' }}>
       {/* Navbar */}
       <nav className="bg-white border-b border-gray-200 px-6 flex items-center justify-between relative flex-shrink-0" style={{ height: NAV_H }}>
         <div
@@ -57,6 +65,13 @@ export default function Layout() {
                     {item.label}
                   </button>
                 ))}
+                <button
+                  type="button"
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors mt-1 pt-2.5 border-t border-gray-100"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </div>
             </>
           )}

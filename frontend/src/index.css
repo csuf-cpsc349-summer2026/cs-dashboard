@@ -1,7 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --accent-color: #4F6EF7;
+  --accent-color: #4F6EF7; /* stays driven by preset selection, see lib/theme.js */
+  --bg-page: #F7F8FA;
+  --card-bg: #FFFFFF;
+  --card-border: #E5E7EB;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+}
+
+html.dark {
+  --bg-page: #15161A;
+  --card-bg: #1E1F24;
+  --card-border: #2E2F36;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
 }
 
 body {

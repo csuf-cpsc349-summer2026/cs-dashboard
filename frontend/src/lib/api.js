@@ -31,7 +31,7 @@ export async function getWeather(city) {
   }
 
   const { latitude, longitude, name } = location;
-  const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+  const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&temperature_unit=fahrenheit`;
   const forecastResponse = await fetch(forecastUrl);
   if (!forecastResponse.ok) {
     throw new Error(`Open-Meteo request failed: ${forecastResponse.status}`);
