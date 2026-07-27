@@ -198,3 +198,31 @@ export async function getGitHubRepos() {
 
   return result.data;
 }
+
+/**
+ * Live: runs user-submitted code via Wandbox (public, keyless compile/run
+ * API) for the Coder page's Daily Algo Challenge "Run Code" box. Piston
+ * (previously used here) went whitelist-only in Feb 2026, so this takes a
+ * Wandbox compiler name directly (e.g. "gcc-13.2.0"), not a bare language.
+ */
+const WANDBOX_COMPILE_URL = "https://wandbox.org/api/compile.json";
+
+export async function runCode(compilerName, code) {
+  const res = await fetch(WANDBOX_COMPILE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code, compiler: compilerName }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Wandbox request failed: ${res.status}`);
+  }
+
+  const data = await res.json();
+  const failed = data.status !== "0" || Boolean(data.signal);
+
+  return {
+    stdout: data.program_output ?? "",
+    stderr: failed ? (data.compiler_error || data.program_error || "Program exited with an error.") : "",
+  };
+}

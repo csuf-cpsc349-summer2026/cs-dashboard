@@ -10,7 +10,7 @@ function formatDueDate(dueAt) {
   return new Date(dueAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
 }
 
-export default function TaskCard({ task, onMove }) {
+export default function TaskCard({ task, onMove, onDelete }) {
   const dueLabel = formatDueDate(task.dueAt)
 
   return (
@@ -39,6 +39,15 @@ export default function TaskCard({ task, onMove }) {
             <option key={key} value={key}>{label}</option>
           ))}
         </select>
+
+        <button
+          type="button"
+          onClick={() => onDelete(task.id)}
+          className="text-[11px] text-gray-400 hover:text-red-500"
+          aria-label={`Delete "${task.title}"`}
+          >
+            ✕
+          </button>
       </div>
     </div>
   )

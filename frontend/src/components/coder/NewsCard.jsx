@@ -10,21 +10,36 @@ export default function NewsCard() {
   }
 
   return (
-    <ul className="flex-1 min-h-0 overflow-y-auto mt-2 space-y-2">
-      {news.map((item) => (
+    <ul className="flex-1 min-h-0 overflow-y-auto mt-2 -mx-2">
+      {news.map((item, index) => (
         <li key={item.id}>
           <a
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-700 hover:text-gray-900 leading-snug block"
-            style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)' }}
+            className="flex items-start gap-2.5 px-2 py-2 rounded-lg hover:bg-gray-50 transition-colors"
           >
-            {item.title}
+            <span
+              className="text-gray-300 font-semibold flex-shrink-0"
+              style={{ fontSize: 'clamp(0.75rem, 2cqw, 0.9rem)' }}
+            >
+              {index + 1}
+            </span>
+            <div className="min-w-0">
+              <p
+                className="text-gray-700 leading-snug"
+                style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)' }}
+              >
+                {item.title}
+              </p>
+              <span
+                className="text-gray-400"
+                style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)' }}
+              >
+                {item.score} points by {item.by}
+              </span>
+            </div>
           </a>
-          <span className="text-gray-400" style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)' }}>
-            {item.score} points by {item.by}
-          </span>
         </li>
       ))}
     </ul>

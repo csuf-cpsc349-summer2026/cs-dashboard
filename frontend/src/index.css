@@ -22,12 +22,3 @@ html.dark {
 body {
   font-family: system-ui, sans-serif;
 }
-
-
-/*TODO: remove before deployment*/
-pre {
-  background: #f4f4f4;
-  padding: 1rem;
-  overflow-x: auto;
-  border-radius: 4px;
-}

@@ -54,13 +54,13 @@ export default function PomodoroTimer() {
 
   return (
     <div className="flex-1 min-h-0 flex flex-col items-center justify-center">
-      <div className="flex gap-1.5 mb-4">
+      <div className="flex gap-2 mb-3">
         {Object.entries(MODE_LABELS).map(([key, label]) => (
           <button
             key={key}
             type="button"
             onClick={() => switchMode(key)}
-            className="text-[11px] font-medium px-2 py-1 rounded-full transition-colors"
+            className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
             style={
               mode === key
                 ? { backgroundColor: 'var(--accent-color)', color: 'white' }
@@ -72,15 +72,15 @@ export default function PomodoroTimer() {
         ))}
       </div>
 
-      <div className="text-4xl font-semibold text-gray-800 tabular-nums mb-4">
+      <div className="text-4xl md:text-7xl font-bold text-gray-800 tabular-nums mb-4 leading-none">
         {formatTime(secondsLeft)}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <button
           type="button"
           onClick={() => setIsRunning((r) => !r)}
-          className="text-xs font-medium text-white rounded-lg px-4 py-1.5"
+          className="text-sm font-semibold text-white rounded-lg px-6 py-2.5"
           style={{ backgroundColor: 'var(--accent-color)' }}
         >
           {isRunning ? 'Pause' : 'Start'}
@@ -88,7 +88,7 @@ export default function PomodoroTimer() {
         <button
           type="button"
           onClick={reset}
-          className="text-xs font-medium text-gray-600 border border-gray-200 rounded-lg px-4 py-1.5 hover:bg-gray-50 transition-colors"
+          className="text-sm font-semibold text-gray-600 border border-gray-200 rounded-lg px-6 py-2.5 hover:bg-gray-50 transition-colors"
         >
           Reset
         </button>

@@ -8,6 +8,7 @@ import MusicPanel from '../components/study/MusicPanel.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getCanvasTasks } from '../lib/api.js'
 import { db } from '../lib/firebase.js'
+import { deleteDoc } from 'firebase/firestore'
 
 export default function Study() {
   const { user, profile } = useAuth()
@@ -36,6 +37,10 @@ export default function Study() {
       status: 'icebox',
       source: 'manual',
     })
+  }
+
+  function deleteTask(id) {
+    deleteDoc(doc(db, 'users', user.uid, 'tasks', id))
   }
 
   async function importFromCanvas() {
@@ -73,18 +78,18 @@ export default function Study() {
 
   return (
     <>
-      <DesktopLayout tasks={tasks} onMove={moveTask} kanbanHeader={kanbanHeader} />
-      <MobileLayout tasks={tasks} onMove={moveTask} kanbanHeader={kanbanHeader} />
+      <DesktopLayout tasks={tasks} onMove={moveTask} onDelete={deleteTask} kanbanHeader={kanbanHeader} />
+      <MobileLayout tasks={tasks} onMove={moveTask} onDelete={deleteTask} kanbanHeader={kanbanHeader} />
     </>
   )
 }
 
 /** Desktop layout: shown at md+. Kanban gets top row; Pomodoro (narrow) and Music (wide) share the bottom row. */
-function DesktopLayout({ tasks, onMove, kanbanHeader }) {
+function DesktopLayout({ tasks, onMove, onDelete, kanbanHeader }) {
   return (
     <div className="hidden md:grid h-full gap-6" style={{ gridTemplateRows: '2fr 1fr' }}>
       <Card label="Scrum / Kanban" headerRight={kanbanHeader} className="flex flex-col">
-        <KanbanBoard tasks={tasks} onMove={onMove} />
+        <KanbanBoard tasks={tasks} onMove={onMove} onDelete={onDelete} />
       </Card>
 
       <div className="grid grid-cols-2 gap-6 min-h-0">
@@ -100,12 +105,12 @@ function DesktopLayout({ tasks, onMove, kanbanHeader }) {
 }
 
 /** Mobile layout: single column, Kanban first with room to breathe, then Pomodoro, then Music. */
-function MobileLayout({ tasks, onMove, kanbanHeader }) {
+function MobileLayout({ tasks, onMove, onDelete, kanbanHeader }) {
   return (
     <div className="flex md:hidden flex-col gap-5 h-full">
       <Card label="Scrum / Kanban" className="flex flex-col" style={{ flex: '2 1 0', minHeight: 260 }}>
         <div className="mb-2">{kanbanHeader}</div>
-        <KanbanBoard tasks={tasks} onMove={onMove} />
+        <KanbanBoard tasks={tasks} onMove={onMove} onDelete={onDelete} />
       </Card>
       <Card label="Pomodoro" className="flex flex-col" style={{ flex: '1 1 0', minHeight: 140 }}>
         <PomodoroTimer />
