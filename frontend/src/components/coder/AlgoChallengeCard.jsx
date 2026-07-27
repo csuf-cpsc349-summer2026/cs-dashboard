@@ -1,6 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCachedFetch } from '../../hooks/useCachedFetch.js'
 import { getDailyAlgoChallenge, runCode } from '../../lib/api.js'
+
+// Pulls the first worked example's output (e.g. "Example 1: ... Output: 12
+// Explanation: ...") as a starting point — LeetCode's formatting isn't
+// perfectly uniform across every problem, so this quietly returns '' when it
+// can't find a match rather than erroring.
+function extractExpectedOutput(description) {
+  if (!description) return ''
+  const match = description.match(/Output:\s*(.+?)(?=\s*(?:Explanation|Example)|$)/i)
+  return match ? match[1].trim() : ''
+}
 
 const DIFFICULTY_COLORS = {
   Easy: { bg: '#E4F5F1', text: '#0F6E56' },
@@ -42,6 +52,10 @@ export default function AlgoChallengeCard() {
   const [running, setRunning] = useState(false)
   const [result, setResult] = useState(null)
   const [expectedOutput, setExpectedOutput] = useState('')
+
+  useEffect(() => {
+    setExpectedOutput(extractExpectedOutput(challenge?.description))
+  }, [challenge])
 
   function handleLanguageChange(newLanguage) {
     setLanguage(newLanguage)

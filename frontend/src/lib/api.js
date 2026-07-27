@@ -129,8 +129,26 @@ export async function getCanvasTasks(userId = "jordan") {
 const LEETCODE_DAILY_URL = "https://alfa-leetcode-api.onrender.com/daily";
 const LEETCODE_TIMEOUT_MS = 4000;
 
+// LeetCode's raw description text HTML-encodes characters like < and > (since a
+// literal < would break their own markup), so tags need stripping AND these
+// common entities decoding, or things like "&lt;=" show up as literal text.
+const HTML_ENTITIES = {
+  "&nbsp;": " ",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&amp;": "&",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&apos;": "'",
+};
+
 function stripHtml(html) {
-  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const withoutTags = html.replace(/<[^>]+>/g, " ");
+  const decoded = withoutTags.replace(
+    /&nbsp;|&lt;|&gt;|&amp;|&quot;|&#39;|&apos;/g,
+    (entity) => HTML_ENTITIES[entity],
+  );
+  return decoded.replace(/\s+/g, " ").trim();
 }
 
 export async function getDailyAlgoChallenge() {
