@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
+import { resolveAccentColor } from "../lib/theme";
 
 /**
  * Reactive counterpart to getCurrentUser() in firebase.js. getCurrentUser()
@@ -46,6 +47,21 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, [user]);
+
+  // Applies the user's saved theme (accent preset + light/dark mode) on load,
+  // so it's already correct on a fresh session, not just right after changing it.
+  useEffect(() => {
+    if (!profile) return;
+
+    const mode = profile.colorMode ?? "light";
+    const preset = profile.accentPreset ?? "indigo";
+
+    document.documentElement.classList.toggle("dark", mode === "dark");
+    document.documentElement.style.setProperty(
+      "--accent-color",
+      resolveAccentColor(preset, mode),
+    );
+  }, [profile]);
 
   const value = useMemo(
     () => ({ user, loading, profile, profileLoading }),

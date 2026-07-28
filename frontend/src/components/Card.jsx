@@ -1,11 +1,11 @@
 export default function Card({ label, headerRight, className = '', style, children, scrollable = true }) {
   return (
     <div
-      className={`bg-white border border-gray-200 rounded-xl p-5 flex flex-col min-h-0 ${className}`}
-      style={style}
+      className={`border rounded-xl p-5 flex flex-col min-h-0 ${className}`}
+      style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', ...style }}
     >
       <div className="flex items-center justify-between flex-shrink-0">
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+        <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
           {label}
         </span>
         {headerRight}
