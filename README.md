@@ -39,6 +39,8 @@ A personalized dashboard for CS students — weather, campus parking, GitHub act
 - Onboarding flow for first-time setup
 
 ![Login flow](docs/screenshots/login.png)
+![Login flow](docs/screenshots/githuboauth.png)
+![Login flow](docs/screenshots/2fa.png)
 
 ## Routes
 
@@ -115,4 +117,4 @@ firebase deploy
 
 See inline screenshots in the [Features](#features) section above, and the deployed site below.
 
-![Deployed site](docs/screenshots/deployed.png)
+![Deployed site](docs/screenshots/home.png)
