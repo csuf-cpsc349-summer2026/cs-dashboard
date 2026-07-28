@@ -47,10 +47,10 @@ function GitHubRepoCard({ style }) {
 
   return (
     <Card label="GitHub Repo" style={style}>
-      {loading && <p className="text-sm text-gray-400 mt-3">Loading...</p>}
-      {error && <p className="text-sm text-gray-400 mt-3">Couldn't load repos right now.</p>}
+      {loading && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Loading...</p>}
+      {error && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Couldn't load repos right now.</p>}
       {!loading && !error && repos?.length === 0 && (
-        <p className="text-sm text-gray-400 mt-3">No repositories yet.</p>
+        <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>No repositories yet.</p>
       )}
       {!loading && !error && repos?.length > 0 && (
         <ul className="mt-3 flex flex-col gap-3">
@@ -60,17 +60,18 @@ function GitHubRepoCard({ style }) {
                 href={repo.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-lg no-underline bg-[#FAFAFA] border border-[#EFEFEF] py-3 px-3.5 transition-colors duration-150 hover:bg-[var(--accent-color)] hover:border-[var(--accent-color)]"
+                className="group block rounded-lg no-underline border py-3 px-3.5 transition-colors duration-150 hover:bg-[var(--accent-color)] hover:border-[var(--accent-color)]"
+                style={{ backgroundColor: 'var(--nested-bg)', borderColor: 'var(--nested-border)' }}
               >
                 <p
-                  className="font-semibold text-gray-900 transition-colors duration-150 group-hover:text-white"
-                  style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)' }}
+                  className="font-semibold transition-colors duration-150 group-hover:text-white"
+                  style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)', color: 'var(--text-primary)' }}
                 >
                   {repo.name}
                 </p>
                 <p
-                  className="text-gray-400 mt-0.5 transition-colors duration-150 group-hover:text-white/85"
-                  style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)' }}
+                  className="mt-0.5 transition-colors duration-150 group-hover:text-white/85"
+                  style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)', color: 'var(--text-muted)' }}
                 >
                   {repo.language ? `${repo.language} · ` : ''}updated {timeAgo(repo.updated_at)}
                 </p>
@@ -93,32 +94,32 @@ function WeatherCard({ style }) {
 
   return (
     <Card label="Weather" style={style} scrollable={false}>
-      {loading && <p className="text-sm text-gray-400 mt-3">Loading...</p>}
-      {error && <p className="text-sm text-gray-400 mt-3">Couldn't load weather right now.</p>}
+      {loading && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Loading...</p>}
+      {error && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Couldn't load weather right now.</p>}
       {!loading && !error && data && (
         <div className="h-full flex flex-col items-center justify-center" style={{ gap: 'clamp(0.5rem, 3cqh, 1rem)' }}>
-          <p className="text-xl font-semibold text-gray-400 uppercase tracking-wide">{data.location}</p>
+          <p className="text-xl font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{data.location}</p>
 
           <div className="flex items-center" style={{ gap: 'clamp(0.5rem, 4cqw, 1rem)' }}>
             <WeatherIcon code={data.weatherCode} style={{ width: iconSize, height: iconSize }} />
-            <span className="font-bold text-gray-900" style={{ fontSize: 'clamp(2rem, 14cqh, 5rem)' }}>
+            <span className="font-bold" style={{ fontSize: 'clamp(2rem, 14cqh, 5rem)', color: 'var(--text-primary)' }}>
               {Math.round(data.temperature)}°
             </span>
           </div>
 
           <div
-            className="flex items-center border-t border-gray-100"
-            style={{ gap: 'clamp(1rem, 6cqw, 1.5rem)', paddingTop: 'clamp(0.5rem, 2cqh, 0.75rem)' }}
+            className="flex items-center border-t"
+            style={{ gap: 'clamp(1rem, 6cqw, 1.5rem)', paddingTop: 'clamp(0.5rem, 2cqh, 0.75rem)', borderColor: 'var(--card-border)' }}
           >
             <div className="text-center">
-              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">High</p>
-              <p className="font-medium text-gray-700" style={{ fontSize: 'clamp(0.875rem, 4cqh, 1.25rem)' }}>
+              <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>High</p>
+              <p className="font-medium" style={{ fontSize: 'clamp(0.875rem, 4cqh, 1.25rem)', color: 'var(--text-primary)' }}>
                 {Math.round(data.high)}°
               </p>
             </div>
             <div className="text-center">
-              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">Low</p>
-              <p className="font-medium text-gray-700" style={{ fontSize: 'clamp(0.875rem, 4cqh, 1.25rem)' }}>
+              <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Low</p>
+              <p className="font-medium" style={{ fontSize: 'clamp(0.875rem, 4cqh, 1.25rem)', color: 'var(--text-primary)' }}>
                 {Math.round(data.low)}°
               </p>
             </div>
@@ -189,15 +190,17 @@ const LOT_DISPLAY_NAMES = {
 }
 
 function ParkingCard({ style }) {
+  const { profile } = useAuth()
+  const isDark = profile?.colorMode === 'dark'
   const { data, loading, error } = useCachedFetch('parking-status', getParkingStatus)
   const lots = data?.lots ?? []
 
   return (
     <Card label="Parking" style={style} scrollable={false}>
-      {loading && <p className="text-sm text-gray-400 mt-3">Loading...</p>}
-      {error && <p className="text-sm text-gray-400 mt-3">Couldn't load parking data right now.</p>}
+      {loading && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Loading...</p>}
+      {error && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Couldn't load parking data right now.</p>}
       {!loading && !error && lots.length === 0 && (
-        <p className="text-sm text-gray-400 mt-3">Parking data unavailable.</p>
+        <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Parking data unavailable.</p>
       )}
       {!loading && !error && lots.length > 0 && (
         <div
@@ -205,7 +208,7 @@ function ParkingCard({ style }) {
           style={{ columnGap: 'clamp(1rem, 6cqw, 1.5rem)', rowGap: 'clamp(0.5rem, 3cqh, 1rem)' }}
         >
           {lots.map(lot => (
-            <ParkingRing key={lot.name} lot={lot} />
+            <ParkingRing key={lot.name} lot={lot} isDark={isDark} />
           ))}
         </div>
       )}
@@ -213,19 +216,30 @@ function ParkingCard({ style }) {
   )
 }
 
-/** Conic-gradient donut ring with a two-state (name / detail) crossfade on hover. */
-function ParkingRing({ lot }) {
+/**
+ * Conic-gradient donut ring with a two-state (name / detail) crossfade on hover.
+ * The unfilled track/closed colors are computed from `isDark` (sourced from
+ * profile.colorMode via useAuth() in ParkingCard) rather than a CSS variable,
+ * since conic-gradient() color-stop syntax doesn't reliably resolve var()
+ * across engines — this keeps it reactive to the Settings toggle without a
+ * reload, since profile updates re-render any component consuming useAuth().
+ */
+function ParkingRing({ lot, isDark }) {
   const displayName = LOT_DISPLAY_NAMES[lot.name] ?? lot.name
   const closed = lot.status === 'Closed'
   const percent = closed ? 0 : (lot.total - lot.available) / lot.total
   const percentValue = Math.round(percent * 100)
 
-  const ringBackground = closed
-    ? '#F3F4F6'
-    : `conic-gradient(${percentColor(percent)} ${percentValue}%, #E5E7EB ${percentValue}% 100%)`
+  const trackColor = isDark ? '#33343B' : '#E5E7EB'
+  const closedColor = isDark ? '#4B4E58' : '#F3F4F6'
+  const closedTextColor = isDark ? '#9CA3AF' : '#D1D5DB'
 
-  const labelColor = closed ? '#D1D5DB' : '#111827'
-  const detailColor = closed ? '#D1D5DB' : '#374151'
+  const ringBackground = closed
+    ? closedColor
+    : `conic-gradient(${percentColor(percent)} ${percentValue}%, ${trackColor} ${percentValue}% 100%)`
+
+  const labelColor = closed ? closedTextColor : 'var(--text-primary)'
+  const detailColor = closed ? closedTextColor : 'var(--text-secondary)'
 
   // NOTE: clamp() bounds below are starting values — tune after visual review.
   // Inner circle inset uses a percentage (not px) so it scales proportionally with the ring.
@@ -237,7 +251,7 @@ function ParkingRing({ lot }) {
       className="group relative rounded-full flex-shrink-0"
       style={{ width: ringSize, height: ringSize, background: ringBackground }}
     >
-      <div className="absolute rounded-full bg-white" style={{ inset: '11%' }}>
+      <div className="absolute rounded-full" style={{ inset: '11%', backgroundColor: 'var(--nested-bg)' }}>
         <span
           className="absolute inset-0 flex items-center justify-center text-center font-medium leading-tight px-2 transition-opacity duration-150 opacity-100 group-hover:opacity-0"
           style={{ color: labelColor, ...textStyle }}
@@ -277,15 +291,15 @@ function CanvasCard({ style }) {
 
   return (
     <Card label="Canvas" style={style}>
-      {loading && <p className="text-sm text-gray-400 mt-3">Loading...</p>}
-      {error && <p className="text-sm text-gray-400 mt-3">Couldn't load Canvas data right now.</p>}
+      {loading && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Loading...</p>}
+      {error && <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Couldn't load Canvas data right now.</p>}
       {!loading && !error && assignments.length === 0 && (
-        <p className="text-sm text-gray-400 mt-3">No assignments due.</p>
+        <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>No assignments due.</p>
       )}
       {!loading && !error && assignments.length > 0 && (
         <div className="mt-3 flex flex-col gap-5">
           <section>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Due Soon</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--text-muted)' }}>Due Soon</h3>
             <ul className="flex flex-col gap-3">
               {dueSoon.map(assignment => (
                 <li key={assignment.id}>
@@ -296,9 +310,9 @@ function CanvasCard({ style }) {
           </section>
 
           <section>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Projects | Tests</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--text-muted)' }}>Projects | Tests</h3>
             {projectsTests.length === 0 ? (
-              <p className="text-sm text-gray-400">None right now.</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>None right now.</p>
             ) : (
               <ul className="flex flex-col gap-3">
                 {projectsTests.map(assignment => (
@@ -318,16 +332,19 @@ function CanvasCard({ style }) {
 /** Same sub-card visual/hover treatment as GitHub's rows, but a div — these aren't links yet. */
 function AssignmentRow({ assignment }) {
   return (
-    <div className="group block rounded-lg bg-[#FAFAFA] border border-[#EFEFEF] py-3 px-3.5 transition-colors duration-150 hover:bg-[var(--accent-color)] hover:border-[var(--accent-color)]">
+    <div
+      className="group block rounded-lg border py-3 px-3.5 transition-colors duration-150 hover:bg-[var(--accent-color)] hover:border-[var(--accent-color)]"
+      style={{ backgroundColor: 'var(--nested-bg)', borderColor: 'var(--nested-border)' }}
+    >
       <p
-        className="font-semibold text-gray-900 transition-colors duration-150 group-hover:text-white"
-        style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)' }}
+        className="font-semibold transition-colors duration-150 group-hover:text-white"
+        style={{ fontSize: 'clamp(0.8rem, 2.2cqw, 1rem)', color: 'var(--text-primary)' }}
       >
         {assignment.name}
       </p>
       <p
-        className="text-gray-400 mt-0.5 transition-colors duration-150 group-hover:text-white/85"
-        style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)' }}
+        className="mt-0.5 transition-colors duration-150 group-hover:text-white/85"
+        style={{ fontSize: 'clamp(0.65rem, 1.6cqw, 0.75rem)', color: 'var(--text-muted)' }}
       >
         {assignment.courseName} · due {formatDueDate(assignment.due_at)}
       </p>

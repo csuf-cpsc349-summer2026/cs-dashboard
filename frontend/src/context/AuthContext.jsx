@@ -41,6 +41,7 @@ export function AuthProvider({ children }) {
 
     setProfileLoading(true);
     const unsubscribe = onSnapshot(doc(db, "users", user.uid), (snap) => {
+      if(snap.metadata.fromCache) return;
       setProfile(snap.exists() ? snap.data() : null);
       setProfileLoading(false);
     });

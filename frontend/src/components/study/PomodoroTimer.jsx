@@ -64,7 +64,7 @@ export default function PomodoroTimer() {
             style={
               mode === key
                 ? { backgroundColor: 'var(--accent-color)', color: 'white' }
-                : { backgroundColor: '#F3F4F6', color: '#6B7280' }
+                : { backgroundColor: 'var(--nested-bg)', color: 'var(--text-secondary)', border: '1px solid var(--card-border)' }
             }
           >
             {label}
@@ -72,7 +72,7 @@ export default function PomodoroTimer() {
         ))}
       </div>
 
-      <div className="text-4xl md:text-7xl font-bold text-gray-800 tabular-nums mb-4 leading-none">
+      <div className="text-4xl md:text-7xl font-bold tabular-nums mb-4 leading-none" style={{ color: 'var(--text-primary)' }}>
         {formatTime(secondsLeft)}
       </div>
 
@@ -88,7 +88,10 @@ export default function PomodoroTimer() {
         <button
           type="button"
           onClick={reset}
-          className="text-sm font-semibold text-gray-600 border border-gray-200 rounded-lg px-6 py-2.5 hover:bg-gray-50 transition-colors"
+          className="text-sm font-semibold border rounded-lg px-6 py-2.5 transition-colors"
+          style={{ color: 'var(--text-secondary)', borderColor: 'var(--card-border)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--nested-bg)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
         >
           Reset
         </button>

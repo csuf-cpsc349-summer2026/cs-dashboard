@@ -11,7 +11,7 @@ function JobPostingComingSoon() {
       >
         Coming soon
       </span>
-      <p className="text-sm text-gray-500 max-w-xs">
+      <p className="text-sm max-w-xs" style={{ color: 'var(--text-secondary)' }}>
         Job postings integration is on the way — we're working on surfacing openings relevant to CS students right here.
       </p>
     </div>

@@ -3,9 +3,9 @@ import Card from '../components/Card.jsx'
 function DevCard({ name, role, blurb }) {
   return (
     <div className="flex flex-col gap-1 mt-2">
-      <p className="text-base font-semibold text-gray-800">{name}</p>
+      <p className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>{name}</p>
       <p className="text-xs font-medium" style={{ color: 'var(--accent-color)' }}>{role}</p>
-      <p className="text-sm text-gray-500 mt-1 leading-relaxed">{blurb}</p>
+      <p className="text-sm mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{blurb}</p>
     </div>
   )
 }
@@ -13,8 +13,8 @@ function DevCard({ name, role, blurb }) {
 function RoadmapItem({ title, description }) {
   return (
     <li>
-      <p className="text-sm font-semibold text-gray-700">{title}</p>
-      <p className="text-sm text-gray-500 mt-0.5">{description}</p>
+      <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{title}</p>
+      <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>{description}</p>
     </li>
   )
 }
@@ -38,12 +38,12 @@ export default function About() {
           />
         </Card>
         <Card label="Goals & Intentions" style={{ minHeight: 320 }}>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+          <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             cs-dashboard brings the tools a CS student checks every day — weather, campus parking,
             coursework, and coding practice — into a single personalized view, cutting down on the
             app-switching that a normal school day involves.
           </p>
-          <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+          <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             It's also our applied introduction to full-stack development for CPSC 349: real third-party
             API integration, Firebase authentication, and per-user data persistence, built as a product
             we'd genuinely use ourselves, not just a class assignment.

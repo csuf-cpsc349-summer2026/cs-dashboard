@@ -20,13 +20,15 @@ export default function AddTaskForm({ onAdd }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="New task title"
-        className="text-sm border border-gray-200 rounded-lg px-2.5 py-1.5 text-gray-700 focus:outline-none w-40"
+        className="text-sm border rounded-lg px-2.5 py-1.5 focus:outline-none w-40"
+        style={{ borderColor: 'var(--card-border)', color: 'var(--text-primary)', backgroundColor: 'var(--card-bg)' }}
       />
       <input
         type="date"
         value={dueAt}
         onChange={(e) => setDueAt(e.target.value)}
-        className="text-sm border border-gray-200 rounded-lg px-2.5 py-1.5 text-gray-500 focus:outline-none"
+        className="text-sm border rounded-lg px-2.5 py-1.5 focus:outline-none"
+        style={{ borderColor: 'var(--card-border)', color: 'var(--text-secondary)', backgroundColor: 'var(--card-bg)' }}
       />
       <button
         type="submit"

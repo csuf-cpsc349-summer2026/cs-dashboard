@@ -69,7 +69,10 @@ export default function Study() {
         type="button"
         disabled={importing}
         onClick={importFromCanvas}
-        className="text-xs font-medium text-gray-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors disabled:opacity-60"
+        className="text-xs font-medium border rounded-lg px-3 py-1.5 transition-colors disabled:opacity-60"
+        style={{ color: 'var(--text-secondary)', borderColor: 'var(--card-border)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--nested-bg)' }}
+        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
       >
         {importing ? 'Importing...' : 'Import from Canvas'}
       </button>

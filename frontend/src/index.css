@@ -8,6 +8,8 @@
   --text-primary: #111827;
   --text-secondary: #6B7280;
   --text-muted: #9CA3AF;
+  --nested-bg: #FAFAFA;
+  --nested-border: #EFEFEF;
 }
 
 html.dark {
@@ -17,8 +19,15 @@ html.dark {
   --text-primary: #F3F4F6;
   --text-secondary: #9CA3AF;
   --text-muted: #6B7280;
+  --nested-bg: #26272D;
+  --nested-border: #33343B;
 }
 
 body {
   font-family: system-ui, sans-serif;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-border) transparent;
 }

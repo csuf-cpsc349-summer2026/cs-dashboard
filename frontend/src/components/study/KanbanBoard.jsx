@@ -11,8 +11,12 @@ export default function KanbanBoard({ tasks, onMove, onDelete }) {
   return (
     <div className="flex-1 min-h-0 flex gap-4 mt-4 overflow-x-auto">
       {COLUMNS.map(({ key, label }) => (
-        <div key={key} className="flex-1 min-w-[140px] bg-gray-100 rounded-lg p-3 flex flex-col overflow-y-auto">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+        <div
+          key={key}
+          className="flex-1 min-w-[140px] rounded-lg p-3 flex flex-col overflow-y-auto"
+          style={{ backgroundColor: 'var(--nested-bg)' }}
+        >
+          <span className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--text-muted)' }}>
             {label}
           </span>
           <div className="flex-1 min-h-0">

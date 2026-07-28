@@ -14,25 +14,32 @@ export default function TaskCard({ task, onMove, onDelete }) {
   const dueLabel = formatDueDate(task.dueAt)
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-2.5 mb-2 last:mb-0">
-      <p className="text-sm text-gray-800 leading-snug">{task.title}</p>
+    <div
+      className="border rounded-lg p-2.5 mb-2 last:mb-0"
+      style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
+    >
+      <p className="text-sm leading-snug" style={{ color: 'var(--text-primary)' }}>{task.title}</p>
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-1.5">
           {task.source === 'canvas' && (
-            <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">
+            <span
+              className="text-[10px] font-medium px-1.5 py-0.5 rounded"
+              style={{ backgroundColor: 'var(--nested-bg)', color: 'var(--text-muted)' }}
+            >
               Canvas
             </span>
           )}
           {dueLabel && (
-            <span className="text-[11px] text-gray-400">Due {dueLabel}</span>
+            <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Due {dueLabel}</span>
           )}
         </div>
 
         <select
           value={task.status}
           onChange={(e) => onMove(task.id, e.target.value)}
-          className="text-[11px] border border-gray-200 rounded px-1 py-0.5 text-gray-500 focus:outline-none"
+          className="text-[11px] border rounded px-1 py-0.5 focus:outline-none"
+          style={{ backgroundColor: 'var(--nested-bg)', borderColor: 'var(--card-border)', color: 'var(--text-secondary)' }}
           aria-label={`Move "${task.title}"`}
         >
           {Object.entries(COLUMN_LABELS).map(([key, label]) => (
@@ -43,7 +50,8 @@ export default function TaskCard({ task, onMove, onDelete }) {
         <button
           type="button"
           onClick={() => onDelete(task.id)}
-          className="text-[11px] text-gray-400 hover:text-red-500"
+          className="text-[11px] hover:text-red-500"
+          style={{ color: 'var(--text-muted)' }}
           aria-label={`Delete "${task.title}"`}
           >
             ✕

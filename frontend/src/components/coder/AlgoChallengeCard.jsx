@@ -77,11 +77,11 @@ export default function AlgoChallengeCard() {
 }
 
   if (loading) {
-    return <p className="text-xs text-gray-400 mt-2">Loading...</p>
+    return <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>Loading...</p>
   }
 
   if (error || !challenge) {
-    return <p className="text-xs text-gray-400 mt-2">Couldn't load today's challenge.</p>
+    return <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>Couldn't load today's challenge.</p>
   }
 
   const colors = DIFFICULTY_COLORS[challenge.difficulty] ?? DIFFICULTY_COLORS.Medium
@@ -97,7 +97,7 @@ export default function AlgoChallengeCard() {
             {challenge.difficulty}
           </span>
           {challenge.source === 'mock' && (
-            <span className="text-[11px] text-gray-400">Sample challenge</span>
+            <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Sample challenge</span>
           )}
         </div>
 
@@ -105,15 +105,15 @@ export default function AlgoChallengeCard() {
           href={challenge.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-gray-800 hover:text-gray-900 leading-snug"
-          style={{ fontSize: 'clamp(1.125rem, 5cqh, 1.75rem)' }}
+          className="font-medium leading-snug"
+          style={{ fontSize: 'clamp(1.125rem, 5cqh, 1.75rem)', color: 'var(--text-primary)' }}
         >
           {challenge.title}
         </a>
 
         <p
-          className="text-gray-500 mt-2"
-          style={{ fontSize: 'clamp(0.8rem, 3cqh, 1rem)', lineHeight: 1.6 }}
+          className="mt-2"
+          style={{ fontSize: 'clamp(0.8rem, 3cqh, 1rem)', lineHeight: 1.6, color: 'var(--text-secondary)' }}
         >
           {challenge.description}
         </p>
@@ -124,7 +124,8 @@ export default function AlgoChallengeCard() {
           <select
             value={language}
             onChange={(e) => handleLanguageChange(e.target.value)}
-            className="text-xs border border-gray-200 rounded px-2 py-1 text-gray-600 focus:outline-none"
+            className="text-xs border rounded px-2 py-1 focus:outline-none"
+            style={{ backgroundColor: 'var(--nested-bg)', borderColor: 'var(--card-border)', color: 'var(--text-secondary)' }}
           >
             {LANGUAGES.map(({ value, label }) => (
               <option key={value} value={value}>{label}</option>
@@ -146,7 +147,8 @@ export default function AlgoChallengeCard() {
           onChange={(e) => setCode(e.target.value)}
           spellCheck={false}
           rows={12}
-          className="w-full text-xs font-mono text-gray-800 bg-gray-50 border border-gray-200 rounded-lg p-3 resize-y focus:outline-none"
+          className="w-full text-xs font-mono border rounded-lg p-3 resize-y focus:outline-none"
+          style={{ backgroundColor: 'var(--nested-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
         />
 
         <input
@@ -154,7 +156,8 @@ export default function AlgoChallengeCard() {
           value={expectedOutput}
           onChange={(e) => setExpectedOutput(e.target.value)}
           placeholder="Expected output (optional, e.g. 12)"
-          className="text-xs border border-gray-200 rounded-lg px-3 py-1.5 text-gray-600 focus:outline-none"
+          className="text-xs border rounded-lg px-3 py-1.5 focus:outline-none"
+          style={{ backgroundColor: 'var(--nested-bg)', borderColor: 'var(--card-border)', color: 'var(--text-secondary)' }}
         />
 
         {result && (

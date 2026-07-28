@@ -33,7 +33,7 @@ export default function Login() {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
-      style={{ backgroundColor: "var(--bg-page)" }}
+      style={{ backgroundColor: "#F7F8FA" }}
     >
       <div
         className="w-full max-w-md bg-white rounded-xl border border-gray-200 shadow-sm"
@@ -41,7 +41,7 @@ export default function Login() {
       >
         {/* Wordmark + tagline */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold tracking-tight mb-2" style={{ color: "var(--text-primary)" }}>
+          <h1 className="text-5xl font-bold tracking-tight mb-2 text-gray-900" >
             {"{"}
             <span style={{ color: "var(--accent-color)" }}>B</span>yte
             <span style={{ color: "var(--accent-color)" }}>B</span>oard{"}"}
